@@ -1,0 +1,70 @@
+import Navbar from "./navbar";
+import '../App.css'
+import axios from "axios"
+import React,{useState} from "react";
+
+function Changepassword(){
+    const[currentPassword,setCurrentPassword]=useState("");
+    const[newPassword,setNewPassword]=useState("");
+    const[confirmPassword,setConfirmPassword]=useState("");
+    const[errormessage,setErrorMessage]=useState("");
+    const token = localStorage.getItem('token')
+    const handleChangePassword = ()=>{
+        if(currentPassword===newPassword){
+            setErrorMessage("Can't be same as Current Pasaword");
+        }
+        else if(newPassword!==confirmPassword){
+            setErrorMessage("Password doesn't match!")
+            return
+        };
+        
+        const data = {
+            currentPassword,
+            newPassword,
+            confirmPassword
+        };
+        axios.post('http://127.0.0.1:8000/changepassword/',data,{headers:{Authorization:`Token ${token}`}})
+        .then((response)=>{
+            setErrorMessage("");
+            alert("Password Changed Successfully")
+        })
+        .catch((error)=>{
+            if(error.response?.data?.message){
+                setErrorMessage(error.response.data.message);
+            }
+            else{
+                setErrorMessage("Failed to connect to API.")
+            }
+        });
+    }
+    return(
+        <div>
+            <Navbar/>
+            <div className="container-fluid bg-doctordetail">
+                <div className="d-flex justify-content-center align-items-center vh-100">
+                    <div className="card w-50 blur-card">
+                        <div className="card-body">
+                            {errormessage && <p style={{color: "red"}}>Error: {errormessage}</p>}
+                            <h2 className="card-title">Change Password</h2>
+                            <div className="form-group">
+                                <label className="form-label">Current Password</label>
+                                <input type="password" value={currentPassword} onChange={(e)=>{setCurrentPassword(e.target.value)}} className="form-control blur-card"/>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">New Password</label>
+                                <input type="password" value={newPassword} onChange={(e)=>{setNewPassword(e.target.value)}}className="form-control blur-card"/>
+                            </div>
+                             <div className="form-group">
+                                <label className="form-label">Confirm Password</label>
+                                <input type="password" className="form-control blur-card" value={confirmPassword} onChange={(e)=>{setConfirmPassword(e.target.value)}}/>
+                            </div>
+                            <button type="submit" className="btn btn-info float-right" onClick={handleChangePassword}>Confirm Password</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}
+export default Changepassword;

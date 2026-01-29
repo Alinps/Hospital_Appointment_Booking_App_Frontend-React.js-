@@ -6,8 +6,10 @@ import Doctordetails from "./components/doctordetails";
 import Doctorbooking from "./components/doctorbooking";
 import Myappointments from "./components/myappointments";
 import Changepassword from "./components/changepassword";
+import Landingpage from "./components/landingpage";
 const router = createBrowserRouter([
-    { path: '/', element: <Login/> },
+    { path: '/', element: <Landingpage/> },
+    {path:'/login',element:<Login/>},
     { path:'/signup',element:<Signup/>},
     { path:'/doctorlistingpage',element:<DoctorListingPage/>},
     { path:'/doctordetails',element:<Doctordetails/>},

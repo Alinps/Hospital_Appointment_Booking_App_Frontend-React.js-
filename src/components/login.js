@@ -45,54 +45,65 @@ function Login() {
     }
   };
 
-  return (
-    <div className="container-fluid bg-doctordetail">
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="card p-4 blur-card" style={{ width: "500px" }}>
-          <div className="card-body text-center">
-            <h2 className="card-title" style={{ color: "#3c7088" }}>
-              Login
-            </h2>
+ return (
+  <div className="glass-login-page">
+    <div className="glass-login-container">
 
-            {errorMessage && (
-              <p style={{ color: "red", marginBottom: "1rem" }}>
-                {errorMessage}
-              </p>
-            )}
+      {/* LEFT — LOGIN */}
+      <div className="glass-panel glass-login-form">
+        <h2>Sign in</h2>
+        <p className="subtitle">
+          Access your appointments and medical records
+        </p>
 
-            <div className="form-group mt-3">
-              <input
-                type="email"
-                className="form-control blur-card"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+        {errorMessage && (
+          <p className="login-error">{errorMessage}</p>
+        )}
 
-            <div className="form-group">
-              <input
-                type="password"
-                className="form-control blur-card"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-            <button
-              className="btn btn-block btn-primary mb-4"
-              onClick={handleLogin}
-            >
-              LOGIN
-            </button>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-            <Link to="/signup">Not registered? Click here</Link>
-          </div>
+          <button type="submit">Log in</button>
+        </form>
+
+        <div className="login-links">
+          <Link to="/signup">Create an account</Link>
         </div>
       </div>
+
+      {/* RIGHT — INFO */}
+      <div className="glass-panel glass-login-info">
+        <h3>CarePlus Hospital</h3>
+        <p>
+          Secure access for patients to manage appointments,
+          consult doctors, and view treatment history.
+        </p>
+
+        <ul>
+          <li>✔ Trusted specialists</li>
+          <li>✔ Secure medical data</li>
+          <li>✔ Easy appointment booking</li>
+        </ul>
+      </div>
+
     </div>
-  );
+  </div>
+);
+
 }
 
 export default checkGuest(Login);

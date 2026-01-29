@@ -1,16 +1,16 @@
-// ProtectedRoute.jsx
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+// // ProtectedRoute.jsx
+// import React from 'react';
+// import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
+// const ProtectedRoute = ({ children }) => {
+//   const token = localStorage.getItem('token');
 
-  // ✅ Check if token exists
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
+//   // ✅ Check if token exists
+//   if (!token) {
+//     return <Navigate to="/" replace />;
+//   }
 
-  return children;
-};
+//   return children;
+// };
 
-export default ProtectedRoute;
+// export default ProtectedRoute;

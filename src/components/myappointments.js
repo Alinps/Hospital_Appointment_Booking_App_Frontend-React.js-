@@ -2,12 +2,13 @@ import Navbar from "./navbar";
 import axios from"axios"
 import React,{useState,useEffect} from "react";
 import '../App.css'
-
+import checkAuth from "./auth/checkAuth";
+import {useSelector} from "react-redux";
 function Myappointment(){
     const[data,setData] = useState([]);
     const[error,setError] = useState();
     const[view,setView]=useState("upcoming"); //"upcoming" | "past"
-    const token = localStorage.getItem('token');
+    let user = useSelector(store => store.auth.user)
 
         const isPastAppointment = (dateStr)=>{
         const today = new Date();
@@ -15,7 +16,7 @@ function Myappointment(){
         const appointmentDate = new Date(dateStr);
         return appointmentDate < today; 
     }
-    
+
     const formatTime = (timeStr) =>
         new Date(`1970-01-01T${timeStr}`).toLocaleTimeString('en-us',{
             hour: '2-digit',
@@ -39,22 +40,22 @@ function Myappointment(){
 
     useEffect(()=>{
         
-        if(!token){
+        if(!user){
             console.warn("No token found in localStorage.");
             setError("User not authenticated. Please log in.");
             return;
         }
-        axios.get("http://127.0.0.1:8000/myappointments/",{headers:{Authorization:`Token ${token}`}})
+        axios.get("http://127.0.0.1:8000/myappointments/",{headers:{Authorization:`Token ${user.token}`}})
         .then((response)=>{
             setData(response.data);
         })
         .catch((err)=>{
             setError(err.response?.data?.detail || "An error occurred")
         });
-    },[token]);
+    },[user]);
 
     const handleCancelAppointment = (id)=>{
-        axios.delete(`http://127.0.0.1:8000/cancelappointment/${id}/`,{headers:{Authorization:`Token ${token}`}})
+        axios.delete(`http://127.0.0.1:8000/cancelappointment/${id}/`,{headers:{Authorization:`Token ${user.token}`}})
         .then(()=>{
             alert('Appoinment cancelled');
             setData(prev => prev.filter(item =>item.id !== id));
@@ -130,4 +131,4 @@ function Myappointment(){
           
     )
 }
-export default Myappointment;
+export default checkAuth(Myappointment);

@@ -2,13 +2,15 @@ import Navbar from "./navbar";
 import '../App.css'
 import axios from "axios"
 import React,{useState} from "react";
+import checkAuth from "./auth/checkAuth";
+import {  useSelector } from "react-redux";
 
 function Changepassword(){
     const[currentPassword,setCurrentPassword]=useState("");
     const[newPassword,setNewPassword]=useState("");
     const[confirmPassword,setConfirmPassword]=useState("");
     const[errormessage,setErrorMessage]=useState("");
-    const token = localStorage.getItem('token')
+    let user = useSelector(store=>store.auth.user);
     const handleChangePassword = ()=>{
         if(currentPassword===newPassword){
             setErrorMessage("Can't be same as Current Pasaword");
@@ -23,7 +25,7 @@ function Changepassword(){
             newPassword,
             confirmPassword
         };
-        axios.post('http://127.0.0.1:8000/changepassword/',data,{headers:{Authorization:`Token ${token}`}})
+        axios.post('http://127.0.0.1:8000/changepassword/',data,{headers:{Authorization:`Token ${user.token}`}})
         .then((response)=>{
             setErrorMessage("");
             alert("Password Changed Successfully")
@@ -67,4 +69,4 @@ function Changepassword(){
         </div>
     )
 }
-export default Changepassword;
+export default checkAuth(Changepassword);

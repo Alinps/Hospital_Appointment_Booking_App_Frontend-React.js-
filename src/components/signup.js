@@ -1,6 +1,7 @@
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import checkGuest from "./auth/checkGuest";
 function Signup(){
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -102,4 +103,4 @@ function Signup(){
         </div>
     )
 }
-export default Signup;
+export default checkGuest(Signup);

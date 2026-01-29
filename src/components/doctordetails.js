@@ -1,5 +1,6 @@
 import Navbar from "./navbar";
 import "../App.css"
+
 function Doctordetails(){
     return(
         <div>

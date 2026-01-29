@@ -1,28 +1,35 @@
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../store/authSlice";
 
 
 function Navbar() {
      const navigate = useNavigate();
+     let user = useSelector(store=>store.auth.user);
+      const dispatch = useDispatch ();
 
     const handleLogout = async() =>{
-        const token = localStorage.getItem('token');
-
-        try{
+        if(user){
+            try{
             await axios.post("http://127.0.0.1:8000/logout/",null,{
                 headers:{
-                    Authorization: `Token ${token}`
+                    Authorization: `Token ${user.token}`
                 },
             });
-            localStorage.clear();
+            dispatch(removeUser());
             navigate("/");
         }
-        catch(error){
+         catch(error){
             console.error('Logout failed:',error);
-            localStorage.clear();
+            dispatch(removeUser());
             navigate("/")
         };
+
+        
+        }
+       
     };
     return <nav className="navbar navbar-expand-sm navbar-dark custom-color-navbar">
         <div className="navbar-brand">
@@ -60,14 +67,26 @@ function Navbar() {
                     Change Password
                 </NavLink>
                 </li>
-                 <li className="nav-item">
-                <NavLink  className="nav-link" onClick={handleLogout}>
-                    Logout
-                </NavLink>
+                  {user?
+                        <li className="nav-item">
+                            <span className="nav-link" onClick={handleLogout}>Logout</span>
+                        </li>:
+                <li className="nav-item">
+                    <NavLink 
+                    to={"/login"} 
+                    className={
+                        'nav-link '+
+                        (status => status.isActive ? 'active' : '')
+                    } 
+                    >
+                    Login
+                    </NavLink>
                 </li>
+            }
             </ul>
-        </div>
+       </div>
     </nav>;
 }
+     
 
 export default Navbar;

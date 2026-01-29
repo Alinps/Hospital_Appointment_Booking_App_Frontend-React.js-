@@ -3,39 +3,40 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import React,{useState,useEffect} from "react"
 import '../App.css'
+import checkAuth from "./auth/checkAuth"
+import {useSelector} from "react-redux";
 function DoctorListingPage(){
-    const token = localStorage.getItem('token');
+  
     const [data,setData] = useState([]);
     const [error,setError] = useState(null);
     const [department,setDepartment]=useState("");
     const [departments,setDepartments]=useState([]);
+    let user = useSelector(store => store.auth.user)
+    console.log(user)
     const navigate=useNavigate();
    useEffect(() => {
-  if (!token) {
-    console.warn("No token found in localStorage.");
-    setError("User not authenticated. Please log in.");
-    return;
-  }
+  if (!user?.token) return; // ⛔ wait until Redux is ready
 
-  axios.get('http://127.0.0.1:8000/doctorlist/', {
+  axios.get("http://127.0.0.1:8000/doctorlist/", {
     headers: {
-      Authorization: `Token ${token}`
+      Authorization: `Token ${user.token}`,
     },
-    params:{
-        department:department || undefined
-    }
+    params: {
+      department: department || undefined,
+    },
   })
   .then((response) => {
     setData(response.data);
-    const uniqueDepartments=[
-        ...new Set(response.data.map(item=>item.department))
+
+    const uniqueDepartments = [
+      ...new Set(response.data.map(item => item.department))
     ];
     setDepartments(uniqueDepartments);
   })
   .catch((err) => {
     setError(err.response?.data?.detail || "An error occurred");
   });
-}, [token,department]);
+}, [user?.token, department]);
 
 
     return(
@@ -115,4 +116,4 @@ function DoctorListingPage(){
         </div>
         </div>
     )}
-export default DoctorListingPage;
+export default checkAuth(DoctorListingPage);

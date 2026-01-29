@@ -2,6 +2,8 @@ import Navbar from "./navbar";
 import axios from "axios";
 import { useParams,useNavigate} from "react-router-dom";
 import React,{useState} from "react";
+import checkAuth from "./auth/checkAuth";
+import {useSelector} from "react-redux";
 
 function Doctorbooking(){
     const {id} = useParams();
@@ -10,6 +12,7 @@ function Doctorbooking(){
     const[time,setTime]=useState();
     const[error,setError]=useState();
     const navigate = useNavigate();
+    let user = useSelector(store => store.auth.user)
 
     const handleBook = (e)=>{
         e.preventDefault();
@@ -18,7 +21,7 @@ function Doctorbooking(){
             date:date,
             time:time
         };
-        axios.post("http://127.0.0.1:8000/appointmentbooking/",bookingData,{headers:{Authorization:`Token ${token}`}})
+        axios.post("http://127.0.0.1:8000/appointmentbooking/",bookingData,{headers:{Authorization:`Token ${user.token}`}})
         .then((response)=>{
             setError("")
             alert("Succssfully Booked!")
@@ -61,4 +64,4 @@ function Doctorbooking(){
         </div>
     )
 }
-export default Doctorbooking;
+export default checkAuth(Doctorbooking);

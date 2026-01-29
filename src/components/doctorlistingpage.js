@@ -7,6 +7,8 @@ function DoctorListingPage(){
     const token = localStorage.getItem('token');
     const [data,setData] = useState([]);
     const [error,setError] = useState(null);
+    const [department,setDepartment]=useState("");
+    const [departments,setDepartments]=useState([]);
     const navigate=useNavigate();
    useEffect(() => {
   if (!token) {
@@ -18,15 +20,22 @@ function DoctorListingPage(){
   axios.get('http://127.0.0.1:8000/doctorlist/', {
     headers: {
       Authorization: `Token ${token}`
+    },
+    params:{
+        department:department || undefined
     }
   })
   .then((response) => {
     setData(response.data);
+    const uniqueDepartments=[
+        ...new Set(response.data.map(item=>item.department))
+    ];
+    setDepartments(uniqueDepartments);
   })
   .catch((err) => {
     setError(err.response?.data?.detail || "An error occurred");
   });
-}, [token]);
+}, [token,department]);
 
 
     return(
@@ -34,14 +43,35 @@ function DoctorListingPage(){
             <Navbar/>
             <div className="container-fluid bg-home" style={{color:"lightblue"}}>
                 <h1 className=" custom-font-heading">Our Doctor's</h1>
-                    <div className ="dropdown">
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Filter by Department</button>
-                            <div className="dropdown-menu">
-                                <a className="dropdown-item" href="/">Cardiology</a>
-                                <a className="dropdown-item" href="/">General Medicine</a>
-                                <a className="dropdown-item" href="/">Pediatrition</a>
-                            </div>
-                    </div>            
+                   <div className="dropdown">
+  <button
+    type="button"
+    className="btn btn-info dropdown-toggle"
+    data-toggle="dropdown"
+  >
+    {department || "Filter by Department"}
+  </button>
+
+  <div className="dropdown-menu">
+    <button
+      className="dropdown-item"
+      onClick={() => setDepartment("")}
+    >
+      All Departments
+    </button>
+
+    {departments.map((dept, index) => (
+      <button
+        key={index}
+        className="dropdown-item"
+        onClick={() => setDepartment(dept)}
+      >
+        {dept}
+      </button>
+    ))}
+  </div>
+</div>
+      
 
                     <div className="row no-gutters mt-2">
                         {error && <p style={{color: "red"}}>Error: {error}</p>}

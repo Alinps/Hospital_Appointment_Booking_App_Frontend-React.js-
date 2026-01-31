@@ -25,12 +25,12 @@ function Myappointment(){
             hour12: true
         });
     
-    const formatDate = (dateStr) =>{
+    const formatDate = (dateStr) =>(
         new Date(dateStr).toLocaleDateString('en-us',{
             year:'numeric',
             month:'long',
             day:'numeric'
-        })};
+        }));
 
     const filteredAppointments = data.filter(item => {
         return view ==="past" 

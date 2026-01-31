@@ -1,8 +1,7 @@
-
 /* ===============================
    PAGE BACKGROUND
 ================================ */
-.doctor-page {
+.appointments-page {
   min-height: 100vh;
   background:
     radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.18), transparent 45%),
@@ -17,9 +16,9 @@
 ================================ */
 .glass {
   background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(26px) saturate(160%);
   border-radius: 22px;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.45);
 
   box-shadow:
     0 30px 60px rgba(15, 23, 42, 0.12),
@@ -29,122 +28,124 @@
 /* ===============================
    HERO
 ================================ */
-.doctor-hero {
+.appointments-hero {
   max-width: 900px;
-  margin: 2.5rem auto;
-  padding: 2.8rem;
+  margin: 2.5rem auto 1.8rem;
+  padding: 2.6rem;
   text-align: center;
 }
 
-.doctor-hero h1 {
+.appointments-hero h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
-.doctor-hero p {
-  color: #64748b;
+.appointments-hero p {
   font-size: 0.95rem;
+  color: #64748b;
 }
 
 /* ===============================
-   CONTROLS
+   TOGGLE
 ================================ */
-.doctor-controls {
-  max-width: 1100px;
+.appointments-toggle {
+  max-width: 400px;
   margin: auto;
-  padding: 1.4rem 1.8rem;
-
+  padding: 0.4rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
-.filter-left h4 {
-  margin-bottom: 0.4rem;
-  font-size: 0.9rem;
-  color: #475569;
-}
-
-.filter-right {
+.appointments-toggle button {
+  flex: 1;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
   font-size: 0.85rem;
+  cursor: pointer;
   color: #475569;
+}
+
+.appointments-toggle button.active {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
 }
 
 /* ===============================
    LIST
 ================================ */
-.doctor-list {
-  max-width: 1100px;
+.appointments-list {
+  max-width: 1000px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
-.doctor-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.6rem;
-}
-
 /* ===============================
-   DOCTOR CARD
+   APPOINTMENT CARD
 ================================ */
-.doctor-card {
-  padding: 1.4rem;
-  text-align: center;
+.appointment-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.4rem 1.8rem;
+  margin-bottom: 1.2rem;
 }
 
-.doctor-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 14px;
-  margin-bottom: 1rem;
-}
-
-.doctor-info h4 {
+.appointment-left h4 {
   font-size: 1rem;
   margin-bottom: 0.2rem;
 }
 
 .dept {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #2563eb;
 }
 
-.exp {
-  font-size: 0.8rem;
-  color: #64748b;
-  margin-bottom: 0.8rem;
+/* MIDDLE */
+.appointment-middle {
+  display: flex;
+  gap: 2.5rem;
 }
 
-/* ===============================
-   BUTTON
-================================ */
-/* .btn-primary {
-  padding: 0.45rem 1.2rem;
+.appointment-middle label {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.appointment-middle p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* RIGHT */
+.appointment-right {
+  text-align: right;
+}
+
+.btn-danger {
+  padding: 0.4rem 1rem;
   border-radius: 999px;
   border: none;
-
-  background: linear-gradient(135deg, #2563eb, #1e40af);
+  background: #dc2626;
   color: white;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
-} */
+}
 
-/* .btn-primary:hover {
-  transform: translateY(-1px);
-} */
+.status.past {
+  font-size: 0.8rem;
+  color: #16a34a;
+  font-weight: 500;
+}
 
 /* ===============================
    EMPTY STATE
 ================================ */
 .empty-state {
-  text-align: center;
   padding: 3rem;
-}
-
-.empty-state h3 {
-  margin-bottom: 0.4rem;
+  text-align: center;
 }
 
 .empty-state p {
@@ -164,9 +165,18 @@
    RESPONSIVE
 ================================ */
 @media (max-width: 768px) {
-  .doctor-controls {
+  .appointment-card {
     flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
-    text-align: center;
+  }
+
+  .appointment-middle {
+    gap: 1.2rem;
+  }
+
+  .appointment-right {
+    width: 100%;
+    text-align: left;
   }
 }

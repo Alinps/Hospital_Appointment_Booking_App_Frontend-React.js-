@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setUser } from "../store/authSlice";
 import checkGuest from "./auth/checkGuest";
+import "../static/css/Login.css"
+import Navbar from "./Navbar";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -46,7 +48,10 @@ function Login() {
   };
 
  return (
-  <div className="hospital-login-page">
+<div>
+ <Navbar/>
+ 
+   
     <div className="hospital-login-card">
 
       {/* Hospital Identity */}
@@ -100,6 +105,7 @@ function Login() {
       </div>
 
     </div>
+
   </div>
 );
 

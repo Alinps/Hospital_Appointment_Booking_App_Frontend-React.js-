@@ -4,6 +4,7 @@ import { useParams,useNavigate} from "react-router-dom";
 import React,{useState} from "react";
 import checkAuth from "./auth/checkAuth";
 import {useSelector} from "react-redux";
+import "../static/css/DoctorBooking.css"
 
 function Doctorbooking(){
     const {id} = useParams();
@@ -36,32 +37,74 @@ function Doctorbooking(){
             }
         });
     };
-    return(
-        <div>
-            <Navbar/>
-            <div className="container-fluid bg-doctordetail">
-                <div className="d-flex justify-content-center align-items-center vh-100">
-                     {error && <p style={{color: "red"}}>Error: {error}</p>}
-                   <div className="card w-50 blur-card ">
-                    <div className="card-body">
-                        <h3 className=" card-title custom-font-heading" style={{color:"#3c7088"}}>Dr. Bruce Wayn</h3>
-                        <h3 className="card-text custom-font-text" style={{fontWeight:500,color:"#3c7088"}}>Cardiology</h3>
-                        <div className="form-group">
-                            <label className="form-label">Select Appointment Date:</label>
-                            <input type="date" className="form-control" value={date}onChange={(e)=>{setDate(e.target.value)}}/>
-                        </div>
-                        <div className="form-group">
-                            <label className="form-label">Select Time Slot:</label>
-                            <input type="time" className="form-control" value={time} onChange={(e)=>setTime(e.target.value)}/>
-                        </div>
-                        <button className="btn btn-block btn-info" onClick={handleBook}>Confirm Appointment</button>
+   return (
+    <div>
+        
+    
+    <div className="booking-page">
+      <Navbar />
 
-                    </div>
-                   </div>
-
-                </div>
-            </div>
+ <div className="booking-content">
+      <section className="booking-card glass">
+        {/* HEADER */}
+        <div className="booking-header">
+          <h2>Confirm Appointment</h2>
+          <p>Please review the details and select a suitable time slot.</p>
         </div>
-    )
+
+        {/* DOCTOR INFO */}
+        <div className="doctor-summary glass">
+          <div>
+            <h3>Dr. Bruce Wayne</h3>
+            <span>Cardiology Specialist</span>
+          </div>
+          <div className="doctor-note">
+            <p>✔ Experienced Consultant</p>
+            <p>✔ Hospital Verified</p>
+          </div>
+        </div>
+
+        {/* FORM */}
+        <div className="booking-form">
+          {error && <p className="error-text">{error}</p>}
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Appointment Date</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Preferred Time</label>
+              <input
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="booking-info">
+            <p>
+              ⏱ Please arrive at least <b>10 minutes early</b> for registration.
+            </p>
+            <p>
+              📄 Carry previous reports if this is a follow-up consultation.
+            </p>
+          </div>
+
+          <button className="btn-primary booking-btn" onClick={handleBook}>
+            Confirm Appointment
+          </button>
+        </div>
+      </section>
+      </div>
+    </div>
+    </div>
+  );
 }
 export default checkAuth(Doctorbooking);

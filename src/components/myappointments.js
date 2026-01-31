@@ -4,6 +4,7 @@ import React,{useState,useEffect} from "react";
 import '../App.css'
 import checkAuth from "./auth/checkAuth";
 import {useSelector} from "react-redux";
+import "../static/css/Appointment.css";
 function Myappointment(){
     const[data,setData] = useState([]);
     const[error,setError] = useState();
@@ -65,70 +66,86 @@ function Myappointment(){
             console.error(err);
         });
     }
-    return(
-        <div>
-            <Navbar/>
-            <div className="container-fluid bg-doctordetail">
-                <h2 className="custom-font-text" style={{fontSize:"50px",color:"#3c7088"}}>My Appointments</h2>
-               <div className="mb-3">
-  <button
-    className={`btn btn-sm mr-2 ${view === "upcoming" ? "btn-info" : "btn-outline-info"}`}
-    onClick={() => setView("upcoming")}
-  >
-    Upcoming Appointments
-  </button>
+ return (
+    <div className="appointments-page">
+      <Navbar />
 
-  <button
-    className={`btn btn-sm ${view === "past" ? "btn-secondary" : "btn-outline-secondary"}`}
-    onClick={() => setView("past")}
-  >
-    Past Appointments
-  </button>
-</div>
+      {/* HEADER */}
+      <section className="appointments-hero glass">
+        <h1>My Appointments</h1>
+        <p>
+          View and manage your upcoming and past hospital appointments in one
+          place.
+        </p>
+      </section>
 
-                {filteredAppointments.map((item)=>(
-                <div key={item.id} className="card mt-4 blur-card">
-                     {error && <p style={{color: "red"}}>Error: {error}</p>}
-                    <div className="card-body">
-                        <h3 className="ccard-title">Upcomming</h3>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="card mb-2 blur-card">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col-md-2">
-                                                    <p className="custom-font-text"><b>{item.doctor_name}</b></p>
-                                                </div>
-                                                <div className="col-md-2">
-                                                    <p>{item.department}</p>
-                                                </div>
-                                                    <div className="col-md-2">
-                                                <p>{formatDate(item.date)}</p>
-                                                </div>
-                                                <div className="col-md-2">
-                                                    <p>{formatTime(item.time)}</p>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <button 
-                                                    className="btn btn-sm btn-danger float-right" 
-                                                    onClick={()=>{handleCancelAppointment(item.id)}}
-                                                    disabled={isPastAppointment(item.date)}>
-                                                        Cancel
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                </div>
-                ))}
-    
+      {/* TOGGLE */}
+      <section className="appointments-toggle glass">
+        <button
+          className={view === "upcoming" ? "active" : ""}
+          onClick={() => setView("upcoming")}
+        >
+          Upcoming
+        </button>
+
+        <button
+          className={view === "past" ? "active" : ""}
+          onClick={() => setView("past")}
+        >
+          Past
+        </button>
+      </section>
+
+      {/* LIST */}
+      <section className="appointments-list">
+        {error && <p className="error-text">{error}</p>}
+
+        {filteredAppointments.length === 0 && (
+          <div className="empty-state glass">
+            <h3>No Appointments</h3>
+            <p>
+              {view === "upcoming"
+                ? "You have no upcoming appointments."
+                : "You have no past appointments."}
+            </p>
           </div>
+        )}
+
+        {filteredAppointments.map((item) => (
+          <div key={item.id} className="appointment-card glass">
+            <div className="appointment-left">
+              <h4>{item.doctor_name}</h4>
+              <span className="dept">{item.department}</span>
+            </div>
+
+            <div className="appointment-middle">
+              <div>
+                <label>Date</label>
+                <p>{formatDate(item.date)}</p>
+              </div>
+              <div>
+                <label>Time</label>
+                <p>{formatTime(item.time)}</p>
+              </div>
+            </div>
+
+            <div className="appointment-right">
+              {!isPastAppointment(item.date) ? (
+                <button
+                  className="btn-danger"
+                  onClick={() => handleCancelAppointment(item.id)}
+                >
+                  Cancel
+                </button>
+              ) : (
+                <span className="status past">Completed</span>
+              )}
+            </div>
           </div>
-          
-    )
+        ))}
+      </section>
+    </div>
+  );
+       
 }
 export default checkAuth(Myappointment);

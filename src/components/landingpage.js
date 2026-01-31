@@ -1,16 +1,13 @@
 import checkGuest from "./auth/checkGuest";
 import { Link } from "react-router-dom";
+import "../static/css/LandingPage.css"
+
+import Navbar from "./Navbar";
 function Landingpage(){
     
     return (
   <div className="page-bg">
-    <nav className="navbar glass">
-      <div className="logo">CarePlus Hospital</div>
-      <div className="nav-actions">
-        <Link to="/login" className="btn-outline">Login</Link>
-        <Link to="/signup" className="btn-primary">Register</Link>
-      </div>
-    </nav>
+   <Navbar />
 
     <section className="hero glass">
       <h1>Quality Healthcare, Without the Wait</h1>

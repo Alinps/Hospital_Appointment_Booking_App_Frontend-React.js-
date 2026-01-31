@@ -1,8 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../store/authSlice";
+import "../static/css/Navbar.css"
 
 
 function Navbar() {
@@ -29,64 +30,51 @@ function Navbar() {
 
         
         }
+    }
+
        
-    };
-    return <nav className="navbar navbar-expand-sm navbar-dark custom-color-navbar">
-        <div className="navbar-brand">
-            <h4>Medica</h4>
-        </div>
-        <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-        >
-            <span className="navbar-toggler-icon"></span>
-        </button>
-        <div
-        className="collapse navbar-collapse mr-auto"
-        id="navbarNav"
-        style={{ float: "left" }}
-        >
-            <ul className="navbar-nav ml-auto" style={{ color: "#ffffff" }}>
-                <li className="nav-item">
-                <NavLink to={"/doctorlistingpage"} className="nav-link">
-                    Home
-                </NavLink>
-                </li>
-                <li className="nav-item">
-                <NavLink to={"/myappointments"} className="nav-link">
-                    My Appointments
-                </NavLink>
-                </li>
-                 <li className="nav-item">
-                <NavLink to={"/changepassword"} className="nav-link">
-                    Change Password
-                </NavLink>
-                </li>
-                  {user?
-                        <li className="nav-item">
-                            <span className="nav-link" onClick={handleLogout}>Logout</span>
-                        </li>:
-                <li className="nav-item">
-                    <NavLink 
-                    to={"/login"} 
-                    className={
-                        'nav-link '+
-                        (status => status.isActive ? 'active' : '')
-                    } 
-                    >
-                    Login
-                    </NavLink>
-                </li>
-            }
-            </ul>
-       </div>
-    </nav>;
+      return (
+    <nav className="navbar glass">
+      <div className="navbar-left">
+        <Link to="/" className="logo">
+          CarePlus Hospital
+        </Link>
+      </div>
+
+      <div className="navbar-right">
+        <Link to="/" className="nav-link">
+          Home
+        </Link>
+
+        {user?.token && (
+          <>
+            <Link to="/appointments" className="nav-link">
+              My Appointments
+            </Link>
+
+            <Link to="/change-password" className="nav-link">
+              Change Password
+            </Link>
+
+            <button className="btn-outline" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        )}
+
+        {!user?.token && (
+          <>
+            <Link to="/login" className="btn-outline">
+              Login
+            </Link>
+            <Link to="/signup" className="btn-primary">
+              Register
+            </Link>
+          </>
+        )}
+      </div>
+    </nav>
+  );
 }
-     
 
 export default Navbar;

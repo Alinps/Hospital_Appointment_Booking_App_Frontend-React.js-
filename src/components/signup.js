@@ -2,6 +2,7 @@ import {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import checkGuest from "./auth/checkGuest";
+import  "../static/css/signup.css";
 function Signup(){
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,62 +46,72 @@ function Signup(){
     });
   };
 
-    return(
-        <div>
-            <div className = "container-fluid bg-doctordetail">
-                <div className="d-flex justify-content-center align-items-center vh-100">
-                  {errormessage && (
-                    <div style={{ color: "red", marginBottom: "1rem" }}>{errormessage}</div>
-                    )}
-                    <div className = "card p-2 blur-card" style={{width:"500px"}}>
-                        <div className="card-body">
-                            <h2 style={{color:"#3c7088"}} mb-2>Register</h2>
-                            <div className="form-group mb-3">
-                                <input className="form-control blur-card" value={name} type="text" placeholder="Name" name="name" onChange={(e)=>setName(e.target.value)}/>
-                            </div>
-
-                            <div className="form-group">
-                                <input className="form-control blur-card" type="email" placeholder="Email" name="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                            </div>
-
-                            <div className="=form-group">
-                                <label className="form-label">Date of Birth</label>
-                                <input type="date" className="form-control blur-card" name="dob" value={dob} onChange={(e)=>setDob(e.target.value)}/>
-                            </div>
-
-                            <div className="form-group mt-3">
-                                <label className="form-label">Gender:</label>
-                                <select className="form-select blur-card" name="gender" value={gender} onChange={(e)=>setGender(e.target.value)}>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group">
-                                <input className="form-control blur-card" type="text-area" placeholder="address" name="address" value={address} onChange={(e)=>setAddress(e.target.value)}/>
-                            </div>
-
-                            <div className="form-group">
-                                <label className="form-label">Phone number</label>
-                                <input className="form-control blur-card" type="tel" placeholder="9874521445" name="contact_no" value={contact_no} onChange={(e)=>setContact(e.target.value)}/>
-                            </div>
-
-                            <div className="form-group">
-                                <label className="form-label">Password</label>
-                                <input className="form-control blur-card" type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
-                            </div>
-
-                            <div className="form-group">
-                                <label className="form-label"> Confirm Password</label>
-                                <input className="form-control blur-card" type="password" value={confirmpassword} onChange={(e)=>setconfirmPassword(e.target.value)}/>
-                            </div>
-                            <button className="btn btn-primary float-right" onClick={registerUser}>Register</button>
-
-                        </div></div>
-                </div>
-            </div>
+     return (
+    <div className="signup-page">
+      <div className="signup-card glass">
+        <div className="signup-header">
+          <h2>Create Your Account</h2>
+          <p>Book appointments, manage visits, and access care seamlessly.</p>
         </div>
-    )
+
+        <form className="signup-form">
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Full Name</label>
+              <input type="text" placeholder="John Doe" onChange={(e)=>setName(e.target.value)} />
+            </div>
+
+            <div className="form-group">
+              <label>Email Address</label>
+              <input type="email" placeholder="john@example.com" onChange={(e)=>setEmail(e.target.value)} />
+            </div>
+
+            <div className="form-group">
+              <label>Phone Number</label>
+              <input type="tel" placeholder="9876543210" onChange={(e)=>setContact(e.target.value)}/>
+            </div>
+
+            <div className="form-group">
+              <label>Date of Birth</label>
+              <input type="date"  onChange={(e)=>setDob(e.target.value)} />
+            </div>
+
+            <div className="form-group">
+              <label>Gender</label>
+              <select  onChange={(e)=>setGender(e.target.value)}>
+                <option value="">Select</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Password</label>
+              <input type="password" placeholder="••••••••"  onChange={(e)=>setPassword(e.target.value)}/>
+            </div>
+
+            <div className="form-group">
+              <label>Confirm Password</label>
+              <input type="password" placeholder="••••••••"  onChange={(e)=>setconfirmPassword(e.target.value)}/>
+            </div>
+
+            <div className="form-group full">
+              <label>Address (Optional)</label>
+              <textarea rows="2" placeholder="Street, City, State"  onChange={(e)=>setAddress(e.target.value)}></textarea>
+            </div>
+          </div>
+
+          <button className="btn-primary signup-btn" onClick={registerUser}>
+            Create Account
+          </button>
+
+          <p className="signup-footer">
+            Already have an account? <span>Login</span>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
 }
 export default checkGuest(Signup);

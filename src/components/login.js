@@ -46,15 +46,21 @@ function Login() {
   };
 
  return (
-  <div className="glass-login-page">
-    <div className="glass-login-container">
+  <div className="hospital-login-page">
+    <div className="hospital-login-card">
 
-      {/* LEFT — LOGIN */}
-      <div className="glass-panel glass-login-form">
-        <h2>Sign in</h2>
-        <p className="subtitle">
-          Access your appointments and medical records
+      {/* Hospital Identity */}
+      <div className="hospital-brand">
+        <h1>CarePlus Hospital</h1>
+        <p>
+          Secure patient portal for appointments, consultations,
+          and medical records.
         </p>
+      </div>
+
+      {/* Login Section */}
+      <div className="login-section">
+        <h2>Patient Login</h2>
 
         {errorMessage && (
           <p className="login-error">{errorMessage}</p>
@@ -63,7 +69,7 @@ function Login() {
         <form onSubmit={handleLogin}>
           <input
             type="email"
-            placeholder="Email address"
+            placeholder="Registered email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -77,32 +83,27 @@ function Login() {
             required
           />
 
-          <button type="submit">Log in</button>
+          <button type="submit">Sign in</button>
         </form>
 
-        <div className="login-links">
+        <div className="login-footer">
+          <span>New patient?</span>
           <Link to="/signup">Create an account</Link>
         </div>
       </div>
 
-      {/* RIGHT — INFO */}
-      <div className="glass-panel glass-login-info">
-        <h3>CarePlus Hospital</h3>
-        <p>
-          Secure access for patients to manage appointments,
-          consult doctors, and view treatment history.
-        </p>
-
-        <ul>
-          <li>✔ Trusted specialists</li>
-          <li>✔ Secure medical data</li>
-          <li>✔ Easy appointment booking</li>
-        </ul>
+      {/* Trust Indicators */}
+      <div className="hospital-trust">
+        <p>✔ Secure access to medical records</p>
+        <p>✔ Appointment booking with verified doctors</p>
+        <p>✔ Data protected as per healthcare standards</p>
       </div>
 
     </div>
   </div>
 );
+
+
 
 }
 

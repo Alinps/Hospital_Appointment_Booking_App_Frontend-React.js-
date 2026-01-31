@@ -1,0 +1,108 @@
+/* ===============================
+   NAVBAR WRAPPER
+================================ */
+.navbar {
+  max-width: 1100px;
+  margin: 0  auto 1.2rem;
+  padding: 0.9rem 1.6rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===============================
+   LOGO
+================================ */
+.logo {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+/* ===============================
+   RIGHT SECTION
+================================ */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ===============================
+   LINKS
+================================ */
+.nav-link {
+  font-size: 0.9rem;
+  color: #334155;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #2563eb;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.btn-primary {
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  border: none;
+
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.btn-outline {
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+
+  border: 1px solid #2563eb;
+  background: transparent;
+
+  color: #2563eb;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+/* ===============================
+   GLASS EFFECT
+================================ */
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(26px) saturate(160%);
+  -webkit-backdrop-filter: blur(26px) saturate(160%);
+
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  box-shadow:
+    0 30px 60px rgba(15, 23, 42, 0.12),
+    inset 0 1px 1px rgba(255,255,255,0.6);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .navbar-right {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

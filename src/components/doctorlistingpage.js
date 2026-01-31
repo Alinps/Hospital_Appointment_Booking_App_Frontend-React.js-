@@ -1,10 +1,11 @@
-import Navbar from "./navbar"
+import Navbar from "./Navbar"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import React,{useState,useEffect} from "react"
 import '../App.css'
 import checkAuth from "./auth/checkAuth"
 import {useSelector} from "react-redux";
+import "../static/css/DoctorListing.css";
 function DoctorListingPage(){
   
     const [data,setData] = useState([]);
@@ -39,81 +40,95 @@ function DoctorListingPage(){
 }, [user?.token, department]);
 
 
-    return(
-        <div>
-            <Navbar/>
-            <div className="container-fluid bg-home" style={{color:"lightblue"}}>
-                <h1 className=" custom-font-heading">Our Doctor's</h1>
-                   <div className="dropdown">
-  <button
-    type="button"
-    className="btn btn-info dropdown-toggle"
-    data-toggle="dropdown"
-  >
-    {department || "Filter by Department"}
-  </button>
+   return (
+  <div className="doctor-page">
+    <Navbar />
 
-  <div className="dropdown-menu">
-    <button
-      className="dropdown-item"
-      onClick={() => setDepartment("")}
-    >
-      All Departments
-    </button>
+    {/* PAGE HEADER */}
+    <section className="doctor-hero glass">
+      <h1>Find the Right Doctor</h1>
+      <p>
+        Browse specialists across departments and book appointments instantly
+        with trusted healthcare professionals.
+      </p>
+    </section>
 
-    {departments.map((dept, index) => (
-      <button
-        key={index}
-        className="dropdown-item"
-        onClick={() => setDepartment(dept)}
-      >
-        {dept}
-      </button>
-    ))}
-  </div>
-</div>
-      
+    {/* FILTER BAR */}
+    <section className="doctor-controls glass">
+      <div className="filter-left">
+        <h4>Departments</h4>
+        <div className="dropdown">
+          <button
+            className="btn btn-outline-primary dropdown-toggle"
+            data-toggle="dropdown"
+          >
+            {department || "All Departments"}
+          </button>
 
-                    <div className="row no-gutters mt-2">
-                        {error && <p style={{color: "red"}}>Error: {error}</p>}
+          <div className="dropdown-menu">
+            <button
+              className="dropdown-item"
+              onClick={() => setDepartment("")}
+            >
+              All Departments
+            </button>
 
-                        {data.map((item) => (
-   
-                        <div key={item.id} className="card customCard blur-card mt-3 mr-2">
-                            <div className="row no-gutters align-items-center">
-                                <div className="col-md-4 p-2">
-                                     <img
-                                      src={`http://127.0.0.1:8000/${item.image}`}
+            {departments.map((dept, index) => (
+              <button
+                key={index}
+                className="dropdown-item"
+                onClick={() => setDepartment(dept)}
+              >
+                {dept}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
-                                        className="img-fluid rounded"
-                                        alt="doctorimage"
-                                        />
-                                </div>
-                                <div className="col-md-7">
-                                    <div className="card-body">
-                                        <h5 className="card-title" style={{ color: "#3c7088" }}>
-                                        {item.name}
-                                        </h5>
-                                        <p className="card-text p-0 m-0" style={{ color: "#3c7088" }}>
-                                        Department: {item.department}
-                                        </p>
-                                        <p className="card-text p-0 m-0" style={{ color: "#3c7088" }}>
-                                        Experience{item.experience}
-                                        </p>
-                                        <button 
-                                            className="btn btn-info btn-sm" 
-                                            onClick={() => navigate(`/doctorbooking/${item.id}`)}
-                                        >Book
-                                        </button>
+      <div className="filter-right">
+        <span>{data.length} Doctors Available</span>
+      </div>
+    </section>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        ))}
-                
+    {/* LISTING */}
+    <section className="doctor-list">
+      {error && <p className="error-text">{error}</p>}
+
+      {data.length === 0 && !error && (
+        <div className="empty-state glass">
+          <h3>No Doctors Found</h3>
+          <p>
+            Try selecting a different department or check back later.
+          </p>
+        </div>
+      )}
+
+      <div className="doctor-grid">
+        {data.map((item) => (
+          <div key={item.id} className="doctor-card glass">
+            <img
+              src={`http://127.0.0.1:8000/${item.image}`}
+              alt={item.name}
+            />
+
+            <div className="doctor-info">
+              <h4>{item.name}</h4>
+              <p className="dept">{item.department}</p>
+              <p className="exp">{item.experience} years experience</p>
+
+              <button
+                className="btn-primary btn-sm"
+                onClick={() => navigate(`/doctorbooking/${item.id}`)}
+              >
+                Book Appointment
+              </button>
             </div>
-        </div>
-        </div>
-    )}
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+);
+}
 export default checkAuth(DoctorListingPage);

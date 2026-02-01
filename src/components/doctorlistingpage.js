@@ -9,14 +9,19 @@ import "../static/css/DoctorListing.css";
 function DoctorListingPage(){
   
     const [data,setData] = useState([]);
+    const [currentPage,setCurrentPage]=useState(1);
+    const [totalPages,setTotalPages]=useState(1);
+    const [loading,setLoading]=useState(false)
     const [error,setError] = useState(null);
     const [department,setDepartment]=useState("");
     const [departments,setDepartments]=useState([]);
+
     let user = useSelector(store => store.auth.user)
     console.log(user)
     const navigate=useNavigate();
    useEffect(() => {
   if (!user?.token) return; // ⛔ wait until Redux is ready
+  setLoading(true);
 
   axios.get("http://127.0.0.1:8000/doctorlist/", {
     headers: {
@@ -24,21 +29,30 @@ function DoctorListingPage(){
     },
     params: {
       department: department || undefined,
+      page:currentPage,
     },
   })
   .then((response) => {
-    setData(response.data);
+    setData(response.data.results);
+    setError(null)
+
+    setTotalPages(Math.ceil(response.data.count/10));
 
     const uniqueDepartments = [
-      ...new Set(response.data.map(item => item.department))
+      ...new Set(response.data.results.map(item => item.department))
     ];
     setDepartments(uniqueDepartments);
+    setLoading(false);
   })
   .catch((err) => {
     setError(err.response?.data?.detail || "An error occurred");
+    setLoading(false);
   });
-}, [user?.token, department]);
+}, [user?.token, department,currentPage]);
 
+useEffect(()=>{
+  setCurrentPage(1);
+},[department]);
 
    return (
   <div className="doctor-page">
@@ -87,24 +101,32 @@ function DoctorListingPage(){
       </div>
 
       <div className="filter-right">
-        <span>{data.length} Doctors Available</span>
+       <span>Page {currentPage} of {totalPages}</span>
       </div>
     </section>
 
     {/* LISTING */}
     <section className="doctor-list">
       {error && <p className="error-text">{error}</p>}
+       
+      {loading && (
 
-      {data.length === 0 && !error && (
-        <div className="empty-state glass">
-          <h3>No Doctors Found</h3>
-          <p>
-            Try selecting a different department or check back later.
-          </p>
+        <div className="loading-state glass">
+          <p>Loading doctors..</p>
         </div>
       )}
 
-      <div className="doctor-grid">
+      {!loading && data.length === 0 && !error &&(
+         <div className="empty-state glass">
+            <h3>No Doctors Found</h3>
+              <p>
+                Try selecting a different department or check back later.
+              </p>
+        </div>
+      )}
+  
+      {!loading && data.length>0 &&(
+         <div className="doctor-grid">
         {data.map((item) => (
           <div key={item.id} className="doctor-card glass">
             <img
@@ -127,6 +149,40 @@ function DoctorListingPage(){
           </div>
         ))}
       </div>
+      )}
+     
+
+
+        {/* pagination ui */}
+        {totalPages > 1 && (
+          <div className="pagination glass">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(prev => prev - 1)}
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={currentPage === index + 1 ? "active" : ""}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+             ))}
+
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(prev => prev + 1)}
+            >
+              Next
+            </button>
+          </div>
+        )}
+
+
     </section>
   </div>
 );

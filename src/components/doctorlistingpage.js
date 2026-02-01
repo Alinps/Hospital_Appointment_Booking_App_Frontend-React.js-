@@ -6,9 +6,12 @@ import '../App.css'
 import checkAuth from "./auth/checkAuth"
 import {useSelector} from "react-redux";
 import "../static/css/DoctorListing.css";
+import SkeletonList from "./SkeletonList"
 function DoctorListingPage(){
   
     const [data,setData] = useState([]);
+    const [searchInput,setSearchInput]=useState("");
+    const [debouncedSearch,setDebouncedSearch]=useState(""); //state for timed api call
     const [currentPage,setCurrentPage]=useState(1);
     const [totalPages,setTotalPages]=useState(1);
     const [loading,setLoading]=useState(false)
@@ -28,6 +31,7 @@ function DoctorListingPage(){
       Authorization: `Token ${user.token}`,
     },
     params: {
+      search: debouncedSearch || undefined,
       department: department || undefined,
       page:currentPage,
     },
@@ -48,11 +52,19 @@ function DoctorListingPage(){
     setError(err.response?.data?.detail || "An error occurred");
     setLoading(false);
   });
-}, [user?.token, department,currentPage]);
+}, [user?.token, department,currentPage,debouncedSearch]);
+
+useEffect(()=>{  
+  setCurrentPage(1);
+},[department,debouncedSearch]);
 
 useEffect(()=>{
-  setCurrentPage(1);
-},[department]);
+  const timer=setTimeout(()=>{
+    setDebouncedSearch(searchInput);
+  },400) //adjust delay here
+
+  return ()=>clearTimeout(timer);
+},[searchInput])
 
    return (
   <div className="doctor-page">
@@ -96,8 +108,13 @@ useEffect(()=>{
                 {dept}
               </button>
             ))}
+
           </div>
         </div>
+      </div>
+
+      <div className="search-center">
+        <input type="text" onChange={(e)=>setSearchInput(e.target.value)} value={searchInput} size="50" placeholder="Search doctor by name"/>
       </div>
 
       <div className="filter-right">
@@ -108,49 +125,49 @@ useEffect(()=>{
     {/* LISTING */}
     <section className="doctor-list">
       {error && <p className="error-text">{error}</p>}
-       
-      {loading && (
+    
 
-        <div className="loading-state glass">
-          <p>Loading doctors..</p>
+    {error && <p className="error-text">{error}</p>}
+
+{loading ? (
+  <SkeletonList count={6} />
+) : data.length === 0 ? (
+  <div className="empty-state glass">
+    <h3>No Doctors Found</h3>
+    <p>
+      Try selecting a different department or check back later.
+    </p>
+  </div>
+) : (
+  <div className="doctor-grid fade-list">
+    {data.map((item, index) => (
+      <div
+        key={item.id}
+        className="doctor-card glass fade-card"
+        style={{ animationDelay: `${index * 60}ms` }}
+      >
+        <img
+          src={`http://127.0.0.1:8000/${item.image}`}
+          alt={item.name}
+        />
+
+        <div className="doctor-info">
+          <h4>{item.name}</h4>
+          <p className="dept">{item.department}</p>
+          <p className="exp">{item.experience} years experience</p>
+
+          <button
+            className="btn-primary btn-sm"
+            onClick={() => navigate(`/doctorbooking/${item.id}`)}
+          >
+            Book Appointment
+          </button>
         </div>
-      )}
-
-      {!loading && data.length === 0 && !error &&(
-         <div className="empty-state glass">
-            <h3>No Doctors Found</h3>
-              <p>
-                Try selecting a different department or check back later.
-              </p>
-        </div>
-      )}
-  
-      {!loading && data.length>0 &&(
-         <div className="doctor-grid">
-        {data.map((item) => (
-          <div key={item.id} className="doctor-card glass">
-            <img
-              src={`http://127.0.0.1:8000/${item.image}`}
-              alt={item.name}
-            />
-
-            <div className="doctor-info">
-              <h4>{item.name}</h4>
-              <p className="dept">{item.department}</p>
-              <p className="exp">{item.experience} years experience</p>
-
-              <button
-                className="btn-primary btn-sm"
-                onClick={() => navigate(`/doctorbooking/${item.id}`)}
-              >
-                Book Appointment
-              </button>
-            </div>
-          </div>
-        ))}
       </div>
-      )}
-     
+    ))}
+  </div>
+)}
+
 
 
         {/* pagination ui */}

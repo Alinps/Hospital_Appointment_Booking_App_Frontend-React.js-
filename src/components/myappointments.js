@@ -5,9 +5,14 @@ import '../App.css'
 import checkAuth from "./auth/checkAuth";
 import {useSelector} from "react-redux";
 import "../static/css/Appointment.css";
+import EditAppointmentModal from "./EditAppointmentModal";
+
+
 function Myappointment(){
     const[data,setData] = useState([]);
     const[error,setError] = useState();
+    const[isModalOpen,setIsModalOpen]=useState(false);
+    const[selectedAppointment,setSelectedAppointment]=useState(null);
     const[view,setView]=useState("upcoming"); //"upcoming" | "past"
     let user = useSelector(store => store.auth.user)
 
@@ -38,6 +43,21 @@ function Myappointment(){
         : !isPastAppointment(item.date);
     });
 
+    const openEditModal=(appointment)=>{
+      setSelectedAppointment(appointment);
+      setIsModalOpen(true);
+    };
+
+    const closeModal=()=>{
+      setIsModalOpen(false);
+      setSelectedAppointment(null);
+    };
+
+    const updateAppointmentInUI=(updated)=>{
+      setData((prev)=>
+      prev.map((appt)=>
+      appt.id===updated.id? updated : appt))
+    }
 
     useEffect(()=>{
         
@@ -131,12 +151,21 @@ function Myappointment(){
 
             <div className="appointment-right">
               {!isPastAppointment(item.date) ? (
+                <>
+                <button 
+                  className="btn-primarys mr-2"
+                  onClick={()=>openEditModal(item)}
+                  >
+                    Edit
+                  </button>
+         
                 <button
                   className="btn-danger"
                   onClick={() => handleCancelAppointment(item.id)}
                 >
                   Cancel
                 </button>
+                </>
               ) : (
                 <span className="status past">Completed</span>
               )}
@@ -144,6 +173,16 @@ function Myappointment(){
           </div>
         ))}
       </section>
+
+
+        {isModalOpen && selectedAppointment && (
+          <EditAppointmentModal
+            appointment={selectedAppointment}
+            onClose={closeModal}
+            onSuccess={updateAppointmentInUI}
+            />
+        )}
+
     </div>
   );
        

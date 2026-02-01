@@ -9,7 +9,7 @@
 
   border-radius: 999px;       /* pill shape */
   position: relative;
-  z-index: 1000;
+  z-index: 100;
 }
 
 /* inner alignment */

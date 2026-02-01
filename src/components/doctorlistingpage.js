@@ -58,7 +58,7 @@ useEffect(()=>{
   setCurrentPage(1);
 },[department,debouncedSearch]);
 
-useEffect(()=>{
+useEffect(()=>{   //for delaying the api call for searching
   const timer=setTimeout(()=>{
     setDebouncedSearch(searchInput);
   },400) //adjust delay here

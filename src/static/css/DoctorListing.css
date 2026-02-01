@@ -170,7 +170,7 @@ animation fade effect for doctor listing card */
 .fade-card {
   opacity: 0;
   transform: translateY(10px);
-  animation: fadeIn 0.50s ease forwards;
+  animation: fadeIn 1s ease forwards;
 }
 
 @keyframes fadeIn {

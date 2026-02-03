@@ -7,6 +7,8 @@ import Doctorbooking from "./components/doctorbooking";
 import Myappointments from "./components/myappointments";
 import Changepassword from "./components/changepassword";
 import Landingpage from "./components/landingpage";
+import Profile from "./components/Profile";
+
 const router = createBrowserRouter([
     { path: '/', element: <Landingpage/> },
     {path:'/login',element:<Login/>},
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
     { path:'/doctorbooking/:id',element:<Doctorbooking/>},
     { path:'/myappointments',element:<Myappointments/>},
     { path:'/changepassword',element:<Changepassword/>},
+    {path:'/profile',element:<Profile/>},
     
 ]);
 

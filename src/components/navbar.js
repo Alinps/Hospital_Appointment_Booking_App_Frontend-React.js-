@@ -57,8 +57,8 @@ function Navbar() {
               <Link to="/myappointments" className="nav-link" onClick={() => setMenuOpen(false)}>
                 My Appointments
               </Link>
-              <Link to="/change-password" className="nav-link" onClick={() => setMenuOpen(false)}>
-                Change Password
+              <Link to="/profile" className="nav-link" onClick={() => setMenuOpen(false)}>
+                Profile
               </Link>
               <button className="btn-outline" onClick={handleLogout}>
                 Logout

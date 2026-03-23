@@ -1,4 +1,4 @@
-import Navbar from "./Navbar"
+import Navbar from "./navbar"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import React,{useState,useEffect} from "react"
@@ -23,7 +23,7 @@ function DoctorListingPage(){
     console.log(user)
     const navigate=useNavigate();
    useEffect(() => {
-  if (!user?.token) return; // ⛔ wait until Redux is ready
+  if (!user?.token) return; // wait until Redux is ready
   setLoading(true);
 
   axios.get("http://127.0.0.1:8000/doctorlist/", {

@@ -2,7 +2,7 @@
     import axios from "axios";
     import { useSelector } from "react-redux";
     import "../static/css/Profile.css"
-    import Navbar from "./Navbar";
+    import Navbar from "./navbar";
     const Profile = () => {
     const [profile, setProfile] = useState(null);
     const [isEditing, setIsEditing] = useState(false);

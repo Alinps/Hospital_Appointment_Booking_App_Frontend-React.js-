@@ -5,7 +5,7 @@ import axios from "axios";
 import { setUser } from "../store/authSlice";
 import checkGuest from "./auth/checkGuest";
 import "../static/css/Login.css"
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 
 function Login() {
   const [email, setEmail] = useState("");

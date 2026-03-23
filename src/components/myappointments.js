@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 import axios from"axios"
 import React,{useState,useEffect} from "react";
 import '../App.css'
@@ -180,6 +180,7 @@ function Myappointment(){
             appointment={selectedAppointment}
             onClose={closeModal}
             onSuccess={updateAppointmentInUI}
+            
             />
         )}
 

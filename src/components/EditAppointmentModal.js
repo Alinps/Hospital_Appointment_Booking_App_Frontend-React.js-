@@ -3,6 +3,7 @@ import axios from "axios";
 import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
 import "../static/css/EditModal.css";
+import API from "../services/api";
 
 function EditAppointmentModal({ appointment, onClose, onSuccess }) {
   const [date, setDate] = useState(appointment.date);
@@ -18,15 +19,7 @@ const handleSave = async () => {
   setError("");
 
   try {
-    await axios.put(
-      `https://hospital-appointment-booking-app-backend.onrender.com/appointments/${appointment.id}/reschedule/`,
-      { date, time: selectedTime },
-      {
-        headers: {
-          Authorization: `Token ${user.token}`,
-        },
-      }
-    );
+    await API.put(`/appointments/${appointment.id}/reschedule/`,{ date, time: selectedTime });
 
     onSuccess({
       ...appointment,
@@ -49,14 +42,7 @@ const handleSave = async () => {
 
   const fetchSlots = async (selectedDate) => {
   try {
-    const res = await axios.get(
-      `https://hospital-appointment-booking-app-backend.onrender.com/doctor/${appointment.doctor}/slots/?date=${selectedDate}`,
-      {
-        headers: {
-          Authorization: `Token ${user.token}`,
-        },
-      }
-    );
+    const res = await API.get(`/doctor/${appointment.doctor}/slots/?date=${selectedDate}`);
 
     setSlots(res.data.slots);
   } catch (error) {

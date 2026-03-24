@@ -3,6 +3,7 @@ import '../App.css'
 import axios from "axios"
 import React,{useState} from "react";
 import checkAuth from "./auth/checkAuth";
+import API from "../services/api";
 import {  useSelector } from "react-redux";
 
 function Changepassword(){
@@ -25,7 +26,7 @@ function Changepassword(){
             newPassword,
             confirmPassword
         };
-        axios.post('https://hospital-appointment-booking-app-backend.onrender.com/changepassword/',data,{headers:{Authorization:`Token ${user.token}`}})
+        API.post('/changepassword/',data)
         .then((response)=>{
             setErrorMessage("");
             alert("Password Changed Successfully")

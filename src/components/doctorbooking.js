@@ -4,6 +4,7 @@ import { useParams,useNavigate} from "react-router-dom";
 import React,{useEffect, useState} from "react";
 import checkAuth from "./auth/checkAuth";
 import {useSelector} from "react-redux";
+import API from "../services/api";
 import "../static/css/DoctorBooking.css"
 
 function Doctorbooking(){
@@ -31,12 +32,7 @@ function Doctorbooking(){
     time: selectedTime,
   };
 
-  axios
-    .post(
-      "https://hospital-appointment-booking-app-backend.onrender.com/appointmentbooking/",
-      bookingData,
-      { headers: { Authorization: `Token ${user.token}` } }
-    )
+  API.post("/appointmentbooking/",bookingData)
     .then(() => {
       setError("");
       alert("Successfully Booked!");
@@ -53,8 +49,7 @@ function Doctorbooking(){
 };
 
     const fetchSlots = (selectedDate) => {
-  axios
-    .get(`https://hospital-appointment-booking-app-backend.onrender.com/doctor/${id}/slots/?date=${selectedDate}`)
+  API.get(`/doctor/${id}/slots/?date=${selectedDate}`)
     .then((res) => {
       setSlots(res.data.slots);
     })
@@ -66,11 +61,7 @@ function Doctorbooking(){
 
 const fetchDoctor = async () => {
     try {
-      const res = await axios.get(`https://hospital-appointment-booking-app-backend.onrender.com/doctordetail/${id}`, {
-        headers: {
-          Authorization: `Token ${user.token}`,
-        }
-      });
+      const res = await API.get(`/doctordetail/${id}`);
 
       setDoctor(res.data.data);
 

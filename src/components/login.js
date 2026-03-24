@@ -6,6 +6,7 @@ import { setUser } from "../store/authSlice";
 import checkGuest from "./auth/checkGuest";
 import "../static/css/Login.css"
 import Navbar from "./navbar";
+import API from "../services/api";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://hospital-appointment-booking-app-backend.onrender.com/login/", {
+      const response = await API.post("/login/", {
         email,
         password,
       });
@@ -36,8 +37,7 @@ function Login() {
 
       alert("Login successful!");
 
-      // ❌ DO NOT navigate here
-      // checkGuest will redirect automatically
+      
 
     } catch (err) {
       console.error("LOGIN ERROR:", err);

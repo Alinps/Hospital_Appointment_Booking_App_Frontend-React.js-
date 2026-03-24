@@ -7,6 +7,7 @@ import checkAuth from "./auth/checkAuth"
 import {useSelector} from "react-redux";
 import "../static/css/DoctorListing.css";
 import SkeletonList from "./SkeletonList"
+import API from "../services/api";
 function DoctorListingPage(){
   
     const [data,setData] = useState([]);
@@ -26,10 +27,7 @@ function DoctorListingPage(){
   if (!user?.token) return; // wait until Redux is ready
   setLoading(true);
 
-  axios.get("https://hospital-appointment-booking-app-backend.onrender.com/doctorlist/", {
-    headers: {
-      Authorization: `Token ${user.token}`,
-    },
+  API.get("/doctorlist/",{
     params: {
       search: debouncedSearch || undefined,
       department: department || undefined,

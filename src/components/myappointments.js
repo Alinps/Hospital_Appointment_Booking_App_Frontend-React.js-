@@ -6,6 +6,7 @@ import checkAuth from "./auth/checkAuth";
 import {useSelector} from "react-redux";
 import "../static/css/Appointment.css";
 import EditAppointmentModal from "./EditAppointmentModal";
+import API from "../services/api";
 
 
 function Myappointment(){
@@ -66,7 +67,7 @@ function Myappointment(){
             setError("User not authenticated. Please log in.");
             return;
         }
-        axios.get("https://hospital-appointment-booking-app-backend.onrender.com/myappointments/",{headers:{Authorization:`Token ${user.token}`}})
+        API.get("/myappointments/")
         .then((response)=>{
             setData(response.data);
         })
@@ -76,7 +77,7 @@ function Myappointment(){
     },[user]);
 
     const handleCancelAppointment = (id)=>{
-        axios.delete(`https://hospital-appointment-booking-app-backend.onrender.com/cancelappointment/${id}/`,{headers:{Authorization:`Token ${user.token}`}})
+        API.delete(`/cancelappointment/${id}/`)
         .then(()=>{
             alert('Appoinment cancelled');
             setData(prev => prev.filter(item =>item.id !== id));

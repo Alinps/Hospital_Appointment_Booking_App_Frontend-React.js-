@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import checkGuest from "./auth/checkGuest";
 import "../static/css/signup.css";
+import API from "../services/api";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -42,8 +43,8 @@ function Signup() {
     };
 
     
-    axios
-      .post("https://hospital-appointment-booking-app-backend.onrender.com/signup", user)
+    API
+      .post("/signup", user)
       .then((response) => {
         setErrorMessage("");
         alert("User successfully registered!");

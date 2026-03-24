@@ -3,12 +3,14 @@
     import { useSelector } from "react-redux";
     import "../static/css/Profile.css"
     import Navbar from "./navbar";
+    import API from "../services/api";
     const Profile = () => {
     const [profile, setProfile] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(true);
     const [avatarFile, setAvatarFile] = useState(null);
+    
 
         const [error, setError] = useState("");
 
@@ -18,11 +20,7 @@
         useEffect(()=>{
              if (!user?.token) return; // wait until Redux is ready
              setLoading(true);
-            axios.get("https://hospital-appointment-booking-app-backend.onrender.com/profile/",{
-                headers:{
-                    Authorization:`Token ${user.token}`,
-                },
-            })
+            API.get("/profile/")
             .then((res)=>{
                 console.log(res.data)
                 setProfile(res.data);
@@ -60,9 +58,8 @@
     data.append("avatar", avatarFile);
   }
 
-  axios.put("https://hospital-appointment-booking-app-backend.onrender.com/profile/", data, {
+  API.put("/profile/", data, {
     headers: {
-      Authorization: `Token ${user.token}`,
       "Content-Type": "multipart/form-data",
     },
   })

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../store/authSlice";
 import { useState } from "react";
 import "../static/css/Navbar.css";
+import API from "../services/api";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -15,11 +16,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       if (user?.token) {
-        await axios.post(
-          "https://hospital-appointment-booking-app-backend.onrender.com/logout/",
-          null,
-          { headers: { Authorization: `Token ${user.token}` } }
-        );
+        await API.post("/logout/",null,);
       }
     } catch (e) {
       console.error(e);

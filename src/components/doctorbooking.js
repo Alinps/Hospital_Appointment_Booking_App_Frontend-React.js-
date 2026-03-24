@@ -33,7 +33,7 @@ function Doctorbooking(){
 
   axios
     .post(
-      "http://127.0.0.1:8000/appointmentbooking/",
+      "https://hospital-appointment-booking-app-backend.onrender.com/appointmentbooking/",
       bookingData,
       { headers: { Authorization: `Token ${user.token}` } }
     )
@@ -54,7 +54,7 @@ function Doctorbooking(){
 
     const fetchSlots = (selectedDate) => {
   axios
-    .get(`http://127.0.0.1:8000/doctor/${id}/slots/?date=${selectedDate}`)
+    .get(`https://hospital-appointment-booking-app-backend.onrender.com/doctor/${id}/slots/?date=${selectedDate}`)
     .then((res) => {
       setSlots(res.data.slots);
     })
@@ -66,7 +66,7 @@ function Doctorbooking(){
 
 const fetchDoctor = async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/doctordetail/${id}`, {
+      const res = await axios.get(`https://hospital-appointment-booking-app-backend.onrender.com/doctordetail/${id}`, {
         headers: {
           Authorization: `Token ${user.token}`,
         }

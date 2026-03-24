@@ -19,7 +19,7 @@ const handleSave = async () => {
 
   try {
     await axios.put(
-      `http://127.0.0.1:8000/appointments/${appointment.id}/reschedule/`,
+      `https://hospital-appointment-booking-app-backend.onrender.com/appointments/${appointment.id}/reschedule/`,
       { date, time: selectedTime },
       {
         headers: {
@@ -50,7 +50,7 @@ const handleSave = async () => {
   const fetchSlots = async (selectedDate) => {
   try {
     const res = await axios.get(
-      `http://127.0.0.1:8000/doctor/${appointment.doctor}/slots/?date=${selectedDate}`,
+      `https://hospital-appointment-booking-app-backend.onrender.com/doctor/${appointment.doctor}/slots/?date=${selectedDate}`,
       {
         headers: {
           Authorization: `Token ${user.token}`,

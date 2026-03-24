@@ -66,7 +66,7 @@ function Myappointment(){
             setError("User not authenticated. Please log in.");
             return;
         }
-        axios.get("http://127.0.0.1:8000/myappointments/",{headers:{Authorization:`Token ${user.token}`}})
+        axios.get("https://hospital-appointment-booking-app-backend.onrender.com/myappointments/",{headers:{Authorization:`Token ${user.token}`}})
         .then((response)=>{
             setData(response.data);
         })
@@ -76,7 +76,7 @@ function Myappointment(){
     },[user]);
 
     const handleCancelAppointment = (id)=>{
-        axios.delete(`http://127.0.0.1:8000/cancelappointment/${id}/`,{headers:{Authorization:`Token ${user.token}`}})
+        axios.delete(`https://hospital-appointment-booking-app-backend.onrender.com/cancelappointment/${id}/`,{headers:{Authorization:`Token ${user.token}`}})
         .then(()=>{
             alert('Appoinment cancelled');
             setData(prev => prev.filter(item =>item.id !== id));

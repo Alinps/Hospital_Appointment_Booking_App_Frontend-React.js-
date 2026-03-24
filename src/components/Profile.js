@@ -16,9 +16,9 @@
     console.log(user);
 
         useEffect(()=>{
-             if (!user?.token) return; // ⛔ wait until Redux is ready
+             if (!user?.token) return; // wait until Redux is ready
              setLoading(true);
-            axios.get("http://localhost:8000/profile/",{
+            axios.get("https://hospital-appointment-booking-app-backend.onrender.com/profile/",{
                 headers:{
                     Authorization:`Token ${user.token}`,
                 },
@@ -60,7 +60,7 @@
     data.append("avatar", avatarFile);
   }
 
-  axios.put("http://localhost:8000/profile/", data, {
+  axios.put("https://hospital-appointment-booking-app-backend.onrender.com/profile/", data, {
     headers: {
       Authorization: `Token ${user.token}`,
       "Content-Type": "multipart/form-data",
@@ -99,7 +99,7 @@
         <img
   src={
     profile.avatar
-      ? `http://localhost:8000${profile.avatar}`
+      ? `${profile.avatar}`
       : "/default-avatar.png"
   }
   alt="avatar"

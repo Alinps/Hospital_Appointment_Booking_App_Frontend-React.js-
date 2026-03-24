@@ -16,7 +16,7 @@ function Navbar() {
     try {
       if (user?.token) {
         await axios.post(
-          "http://127.0.0.1:8000/logout/",
+          "https://hospital-appointment-booking-app-backend.onrender.com/logout/",
           null,
           { headers: { Authorization: `Token ${user.token}` } }
         );

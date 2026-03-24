@@ -43,7 +43,7 @@ function Signup() {
 
     
     axios
-      .post("http://127.0.0.1:8000/signup", user)
+      .post("https://hospital-appointment-booking-app-backend.onrender.com/signup", user)
       .then((response) => {
         setErrorMessage("");
         alert("User successfully registered!");

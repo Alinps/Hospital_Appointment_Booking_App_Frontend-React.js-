@@ -26,7 +26,7 @@ function DoctorListingPage(){
   if (!user?.token) return; // wait until Redux is ready
   setLoading(true);
 
-  axios.get("http://127.0.0.1:8000/doctorlist/", {
+  axios.get("https://hospital-appointment-booking-app-backend.onrender.com/doctorlist/", {
     headers: {
       Authorization: `Token ${user.token}`,
     },
@@ -147,7 +147,7 @@ useEffect(()=>{   //for delaying the api call for searching
         style={{ animationDelay: `${index * 60}ms` }}
       >
         <img
-          src={`http://127.0.0.1:8000/${item.image}`}
+          src={item.image}
           alt={item.name}
         />
 

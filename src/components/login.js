@@ -17,21 +17,21 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/login/", {
+      const response = await axios.post("https://hospital-appointment-booking-app-backend.onrender.com/login/", {
         email,
         password,
       });
 
       console.log("LOGIN RESPONSE:", response.data);
 
-      // ✅ Backend returns { user: { id, name, email, token } }
+      //  Backend returns { user: { id, name, email, token } }
       const user = response.data.user;
 
       if (!user?.token) {
         throw new Error("Token missing in login response");
       }
 
-      // ✅ Update Redux (localStorage handled in slice)
+      //  Update Redux (localStorage handled in slice)
       dispatch(setUser(user));
 
       alert("Login successful!");

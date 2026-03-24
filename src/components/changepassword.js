@@ -25,7 +25,7 @@ function Changepassword(){
             newPassword,
             confirmPassword
         };
-        axios.post('http://127.0.0.1:8000/changepassword/',data,{headers:{Authorization:`Token ${user.token}`}})
+        axios.post('https://hospital-appointment-booking-app-backend.onrender.com/changepassword/',data,{headers:{Authorization:`Token ${user.token}`}})
         .then((response)=>{
             setErrorMessage("");
             alert("Password Changed Successfully")

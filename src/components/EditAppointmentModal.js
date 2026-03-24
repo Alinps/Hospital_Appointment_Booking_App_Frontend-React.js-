@@ -7,7 +7,7 @@ import API from "../services/api";
 
 function EditAppointmentModal({ appointment, onClose, onSuccess }) {
   const [date, setDate] = useState(appointment.date);
-  const [time, setTime] = useState(appointment.time);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [slots, setSlots] = useState([]);

@@ -10,7 +10,6 @@ import "../static/css/DoctorBooking.css"
 function Doctorbooking(){
     const {id} = useParams();
     const[date,setDate]=useState();
-    const[time,setTime]=useState();
     const[doctor,setDoctor]=useState([]);
     const[error,setError]=useState();
     const [slots, setSlots] = useState([]);
@@ -72,7 +71,7 @@ const fetchDoctor = async () => {
 
   useEffect(() => {
     fetchDoctor();
-  }, []);
+  }, [fetchDoctor]);
 
 
 

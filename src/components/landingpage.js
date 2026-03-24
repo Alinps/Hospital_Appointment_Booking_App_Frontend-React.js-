@@ -1,5 +1,4 @@
 import checkGuest from "./auth/checkGuest";
-import { Link } from "react-router-dom";
 import "../static/css/LandingPage.css"
 
 

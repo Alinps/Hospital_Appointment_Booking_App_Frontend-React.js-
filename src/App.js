@@ -20,7 +20,7 @@ function App() {
         <Route
       path="/doctorbooking/:id"
       element={
-        <ProtectedRoute>
+        <ProtectedRoute>path("health_check/",views.wakeup)
           <Doctorbooking/>
         </ProtectedRoute>
       }

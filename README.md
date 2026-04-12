@@ -1,70 +1,124 @@
-# Getting Started with Create React App
+# Hospital Appointment Booking App (Frontend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple and professional React frontend for a hospital appointment booking system.
+
+This app allows patients to register, log in, browse doctors, book appointments, reschedule/cancel bookings, and manage their profile.
+
+## Features
+
+- User signup and login
+- Token-based authentication with persistent session (Redux + localStorage)
+- Doctor listing with department filter, debounced search, and pagination
+- Doctor appointment booking with available time slots
+- Appointment management (view upcoming/past, reschedule, and cancel)
+- Patient profile view and update (including avatar upload)
+- Change password
+- Backend wake-up/health check screen on app start
+
+## Tech Stack
+
+- React 19
+- React Router DOM 7
+- Redux Toolkit + React Redux
+- Axios
+- Bootstrap 5
+- Create React App
+
+## Project Structure
+
+- `src/components/` - UI screens and reusable components
+- `src/components/auth/` - auth guards (`checkAuth`, `checkGuest`)
+- `src/services/api.js` - Axios instance and auth header interceptor
+- `src/store/` - Redux store and auth slice
+- `src/router.js` - App routes
+- `src/static/css/` - Component-specific styles
+
+## Prerequisites
+
+- Node.js (v18 or newer recommended)
+- npm
+- Running backend API
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+REACT_APP_API_URL=http://127.0.0.1:8000
+```
+
+Use your backend base URL (without trailing slash if possible).
+
+## Installation and Run
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start development server:
+
+```bash
+npm start
+```
+
+3. Open in browser:
+
+`http://localhost:3000`
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `npm start` - Run app in development mode
+- `npm test` - Run test runner
+- `npm run build` - Build production bundle
+- `npm run eject` - Eject CRA config (irreversible)
 
-### `npm start`
+## Main Routes
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- `/` - Server wake-up page
+- `/landing` - Landing page
+- `/login` - Login
+- `/signup` - Registration
+- `/doctorlistingpage` - Doctor listing (protected)
+- `/doctorbooking/:id` - Book appointment (protected)
+- `/myappointments` - View/manage appointments (protected)
+- `/profile` - Profile page (protected)
+- `/changepassword` - Change password (protected)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Backend Endpoints Used
 
-### `npm test`
+The frontend currently calls these APIs:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `GET health_check/`
+- `POST /signup`
+- `POST /login/`
+- `POST /logout/`
+- `GET /doctorlist/`
+- `GET /doctordetail/:id`
+- `GET /doctor/:id/slots/?date=YYYY-MM-DD`
+- `POST /appointmentbooking/`
+- `GET /myappointments/`
+- `DELETE /cancelappointment/:id/`
+- `PUT /appointments/:id/reschedule/`
+- `GET /profile/`
+- `PUT /profile/`
+- `POST /changepassword/`
 
-### `npm run build`
+## Authentication Notes
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Login response should provide `user.token`
+- Token is sent automatically as `Authorization: Token <token>`
+- User state is persisted in `localStorage` under key `user`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Build for Production
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm run build
+```
 
-### `npm run eject`
+Production files will be generated in the `build/` folder.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## License
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is for learning and development purposes.
